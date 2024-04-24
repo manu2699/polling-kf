@@ -22,7 +22,7 @@ async function getData() {
     .select()
     .eq("createdBy", userCookie?.value || "");
 
-  console.log("polling list", {othersPolls, myPolls});
+  // console.log("polling list", {othersPolls, myPolls});
 
   return { othersPolls, myPolls };
 }

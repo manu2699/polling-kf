@@ -59,18 +59,22 @@ export function ActionButton({
 }
 function Poll({ isPollCreation, onSubmit }: any) {
   const [options, setOptions] = useState([
-    { id: "guru", value: "options", isSelected: false, isCheckBox: false },
-    { id: "guru2", value: "options", isSelected: false, isCheckBox: false },
-    { id: "guru3", value: "options", isSelected: false, isCheckBox: false },
-    { id: "guru4", value: "options", isSelected: false, isCheckBox: false },
+    { id: "guru", value: "options" },
+    { id: "guru2", value: "options" },
+    { id: "guru3", value: "options" },
+    { id: "guru4", value: "options" },
   ]);
   const [title, setTitle] = useState("");
   const [isSingleSelect, setIsSingleSelect] = useState(true);
   const [isMultiSelect, setIsMultiSelect] = useState(false);
 
   function onPollCreation() {
-    // onSubmit({ title, options });
-    console.log({ title, options, isSingleSelect, isMultiSelect });
+    onSubmit({ title, options, isMultiple: isMultiSelect || isSingleSelect });
+    console.log({
+      title,
+      options,
+      isMultiple: isMultiSelect || isSingleSelect,
+    });
   }
   function onCreateOptions() {
     setOptions([
@@ -78,8 +82,6 @@ function Poll({ isPollCreation, onSubmit }: any) {
       {
         id: Math.random().toString(),
         value: "options",
-        isSelected: false,
-        isCheckBox: true,
       },
     ]);
   }
@@ -122,7 +124,7 @@ function Poll({ isPollCreation, onSubmit }: any) {
               {options.map((item, index) => (
                 <div key={index}>
                   <ActionButton
-                    isCheckBox={item.isSelected}
+                    // isCheckBox={item.isSelected}
                     title={item.value}
                     item={item}
                     onOptionsChange={onOptionsChange}
@@ -174,7 +176,7 @@ function Poll({ isPollCreation, onSubmit }: any) {
               {options.map((item, index) => (
                 <div key={index}>
                   <ActionButton
-                    isCheckBox={item.isSelected}
+                    // isCheckBox={item.isSelected}
                     title={item.value}
                     isPollCreation={isPollCreation}
                   />
