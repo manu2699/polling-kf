@@ -7,27 +7,26 @@ export function ActionButton({
   isPollCreation,
   title = "Options",
   onPress = () => {},
-  item={},
-  onOptionsChange
+  item = {},
+  onOptionsChange,
 }: any) {
   const [isChecked, setIsChecked] = useState(false);
   const [isEditableTitle, setEditableTitle] = useState(false);
-  const [customTitle,setCustomTitle]=useState("")
+  const [customTitle, setCustomTitle] = useState("");
   function handleSelection() {
     setIsChecked(!isChecked);
-    console.log("calledbakkskdfsd")
+    console.log("calledbakkskdfsd");
     onPress();
   }
   function editOptions(e: any) {
-    console.log("editOptions")
+    console.log("editOptions");
     e.stopPropagation();
     setEditableTitle(true);
 
     if (isPollCreation) {
-    
     }
   }
-  function onInputBlur(e:any){
+  function onInputBlur(e: any) {
     setEditableTitle(false);
   }
   return (
@@ -44,12 +43,22 @@ export function ActionButton({
         className="font-sans font-md text-white font-medium"
         onClick={(e) => editOptions(e)}
       >
-        {isEditableTitle ? <input type="text" value={customTitle} className="text-black" onChange={(e)=>setCustomTitle(e.target.value)} onBlur={(e)=>onInputBlur(e)}/> : title}
+        {isEditableTitle ? (
+          <input
+            type="text"
+            value={customTitle}
+            className="text-black"
+            onChange={(e) => setCustomTitle(e.target.value)}
+            onBlur={(e) => onInputBlur(e)}
+          />
+        ) : (
+          title
+        )}
       </div>
     </div>
   );
 }
-function Poll({ isPollCreation, onSubmit }: any) {
+function Poll({ isPollCreation, onSubmit, pollInfo }: any) {
   const [options, setOptions] = useState([
     { id: "guru", value: "options", isSelected: false, isCheckBox: false },
     { id: "guru2", value: "options", isSelected: false, isCheckBox: false },
@@ -74,9 +83,9 @@ function Poll({ isPollCreation, onSubmit }: any) {
   return (
     <div className="grid grid-cols-3">
       <div className="grid cols-span-2"></div>
-      {isPollCreation ? (
-        <div className="grid cols-span-4">
-          <div className="flex flex-col p-3 rounded-md border-2 border-slate-200">
+      <div className="grid cols-span-4">
+        <div className="flex flex-col p-3 rounded-md border-2 border-slate-200">
+          {isPollCreation && (
             <div className="flex gap-3">
               <span>Poll type</span>{" "}
               <ActionButton
@@ -90,8 +99,10 @@ function Poll({ isPollCreation, onSubmit }: any) {
                 isCheckBox={true}
               />
             </div>
-          </div>
-          <div className="flex flex-col gap-y-3">
+          )}
+        </div>
+        <div className="flex flex-col gap-y-3">
+          {isPollCreation ? (
             <div>
               <span>Poll title</span>
               <input
@@ -100,6 +111,10 @@ function Poll({ isPollCreation, onSubmit }: any) {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
+          ) : (
+            <span>{pollInfo.question}</span>
+          )}
+          {isPollCreation ? (
             <div className="flex flex-col gap-y-3">
               {options.map((item, index) => (
                 <div key={index}>
@@ -111,72 +126,25 @@ function Poll({ isPollCreation, onSubmit }: any) {
                 </div>
               ))}
             </div>
+          ) : (
+            <span>demo</span>
+          )}
+          {isPollCreation && (
             <div
               onClick={onCreateOptions}
               className="cursor-pointer bg-violet-600 text-white font-medium w-fit px-5 py-2 rounded-md"
             >
               + add options
             </div>
-            <div
-              onClick={onPollCreation}
-              className="cursor-pointer bg-violet-800 text-white font-medium w-fit px-5 py-2 rounded-md"
-            >
-              Submit
-            </div>
+          )}
+          <div
+            onClick={onPollCreation}
+            className="cursor-pointer bg-violet-800 text-white font-medium w-fit px-5 py-2 rounded-md"
+          >
+            Submit
           </div>
         </div>
-      ) : (
-        <div className="grid cols-span-4">
-          <div className="flex flex-col p-3 rounded-md border-2 border-slate-200">
-            <div className="flex gap-3">
-              <span>Poll type</span>{" "}
-              <ActionButton
-                onPress={() => console.log("createions")}
-                title="Single answer"
-                isCheckBox={true}
-              />
-              <ActionButton
-                onPress={() => console.log("createions")}
-                title="Multiple answer"
-                isCheckBox={true}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-y-3">
-            <div>
-              <span>Poll title</span>
-              <input
-                type="text"
-                className="border-2 border-slate-200 rounded-md px-2 py-1"
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col gap-y-3">
-              {options.map((item, index) => (
-                <div key={index}>
-                  <ActionButton
-                    isCheckBox={item.isSelected}
-                    title={item.value}
-                    isPollCreation={isPollCreation}
-                  />
-                </div>
-              ))}
-            </div>
-            <div
-              onClick={onCreateOptions}
-              className="cursor-pointer bg-violet-600 text-white font-medium w-fit px-5 py-2 rounded-md"
-            >
-              + add options
-            </div>
-            <div
-              onClick={onPollCreation}
-              className="cursor-pointer bg-violet-800 text-white font-medium w-fit px-5 py-2 rounded-md"
-            >
-              Submit
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
       <div className="grid cols-span-2"></div>
     </div>
   );

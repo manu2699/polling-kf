@@ -22,7 +22,7 @@ export const POLL_LIST = [
   {
     id: "003",
     question: "what is ur fav snack2 ?",
-    isMulti: true,
+    isMulti: false,
     createdBy: {
       id: "guru002_session_id",
       name: "Guru",
@@ -62,7 +62,7 @@ export const POLL_LIST = [
   {
     id: "002",
     question: "what is ur fav food ?",
-    isMultiSelectPOoll: true,
+    isMulti: true,
     createdBy: {
       id: "venky001_session_id",
       name: "Venky",
