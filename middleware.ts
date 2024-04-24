@@ -7,12 +7,12 @@ export async function middleware(request: NextRequest) {
 	if (!request.cookies.has("userId")) {
 		const supabase = createClient();
 		let { data } = await supabase
-			.from("usersessions")
+			.from("sessions")
 			.insert([{ name: "test" }])
 			.select();
 
 		// // const { data } = await supabase.from("usersessions").select();
-		// console.log("check dt 2", data);
+		console.log("User session data :: ", data);
 
 		const response = NextResponse.next();
 		response.cookies.set("userId", data[0].id);

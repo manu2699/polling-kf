@@ -21,7 +21,6 @@ async function getData(pollId: string) {
 	}
 
 	// console.log("polls & options :: ", pollData, pollOptionsData);
-
 	return { ...pollData, options: pollOptionsData };
 }
 
