@@ -46,7 +46,7 @@ function PollsList({ pollsList, myPoll = false }) {
           className="h-10 p-5 flex items-center justify-between border-b-2	"
           key={pollInfo.id}
         >
-          <span className="text-sm font-medium text-slate-600		">
+          <span className="text-sm font-medium text-slate-600">
             {pollInfo.question}
           </span>
           {myPoll && <Button variant="secondary">View report</Button>}
@@ -58,7 +58,7 @@ function PollsList({ pollsList, myPoll = false }) {
 
 function Title({ children }) {
   return (
-    <div className="mb-4 text-base	font-medium border-cyan-800text-slate-800		">
+    <div className="mb-4 text-base	font-medium border-cyan-800 text-slate-800		">
       {children}
     </div>
   );

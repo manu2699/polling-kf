@@ -19,8 +19,9 @@ export default function PollId({ params }) {
 
   return (
     <div className="p-10">
-      <Card className="p-12">
-        <p>{pollInfo.question}</p>
+      <Card className="">
+        <p className="font-medium text-slate-600 m-4">{pollInfo.question}</p>
+        <div className="h-px w-full bg-slate-400	mb-6" />
         {pollInfo.isMulti ? (
           <MultiSelect options={pollInfo.options} />
         ) : (
@@ -42,7 +43,7 @@ function SingleSelect({ options, onSingleSelectChange }) {
         <div
           key={option.id}
           id={option.id}
-          className="flex items-center space-x-2"
+          className="font-medium text-slate-600 flex items-center space-x-2 mx-6 mb-6"
         >
           <RadioGroupItem value={option.value} id={option.id} />
           <Label htmlFor={option.id}>{option.value}</Label>
