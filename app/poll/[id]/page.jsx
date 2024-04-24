@@ -60,7 +60,10 @@ function MultiSelect({ options }) {
   return (
     <div>
       {options.map((option) => (
-        <div key={option.id} className="flex h-6 align-center">
+        <div
+          key={option.id}
+          className="flex h-6 align-center font-medium text-slate-600 flex items-center space-x-2 mx-6 mb-6"
+        >
           <Checkbox id="terms" />
           <Label htmlFor={option.id}>{option.value}</Label>
         </div>
