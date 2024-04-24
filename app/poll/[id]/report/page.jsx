@@ -13,7 +13,6 @@ export default function PollId({ params }) {
 
   return (
     <div>
-      Report
       <BarChart
         className="h-screen	"
         data={pollData}
