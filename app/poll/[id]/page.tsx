@@ -7,6 +7,15 @@ async function getData(pollId: string) {
 		.select()
 		.eq("id", pollId);
 
+	// const { data, error } = await supabase
+	// 	.from('pollOptions')
+	// 	.select(`
+	// 		id,
+	// 		name,
+	// 		pollId:poll (title, isMultiple)
+	// 	`);
+	// console.log('data :: ', data)
+
 	if (!pollData) {
 		return { error: "Poll not found" };
 	}
@@ -20,8 +29,7 @@ async function getData(pollId: string) {
 		return { error: "Poll options not found" };
 	}
 
-	// console.log("polls & options :: ", pollData, pollOptionsData);
-	return { ...pollData, options: pollOptionsData };
+	return { ...pollData[0], options: pollOptionsData };
 }
 
 export default async function PollId({ params }: { params: { id: string } }) {
