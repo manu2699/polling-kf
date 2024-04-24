@@ -1,3 +1,5 @@
+import Poll from "@/components/poll";
+
 export default function Home() {
-  return <div className={""}>Poll crete</div>;
+  return <div className="bg-red-300"><Poll isCreation/></div>;
 }
