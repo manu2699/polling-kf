@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { BarChart } from '@tremor/react';
 import { POLL_LIST } from '../mock';
 
-export function PollResult(index){
+export function PollResult({index}){
 
   const pollData = useMemo(function getPollData(){
          return POLL_LIST[index].options.reduce((acc, data)=>{ 
