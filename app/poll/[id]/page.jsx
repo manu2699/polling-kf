@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import Poll from "@/components/poll";
+import { Button } from "@/components/ui/button";
 
 export default function PollId({ params }) {
   const [selectedPollOption, setSelectedPollOption] = useState();
@@ -30,6 +31,7 @@ export default function PollId({ params }) {
             options={pollInfo.options}
           />
         )}
+        <Button className="bg-slate-600 text-white	mx-6 mb-6">Submit</Button>
       </Card>
     </div>
   );
