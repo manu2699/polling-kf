@@ -22,7 +22,7 @@ export default function Home() {
         <div className="text-base	font-semibold	text-cyan-800	">
           Polls Dashboard
         </div>
-        <Button className="bg-cyan-900	text-white	m-2" variant="secondary">
+        <Button className="bg-slate-600 text-white m-2" variant="secondary">
           Create Poll
         </Button>
       </div>
@@ -43,13 +43,21 @@ function PollsList({ pollsList, myPoll = false }) {
     <Card className="mb-4">
       {pollsList.map((pollInfo) => (
         <div
-          className="h-10 p-5 flex items-center justify-between border-b-2	"
+          className="p-5 flex items-center justify-between border-b-2	"
           key={pollInfo.id}
         >
           <span className="text-sm font-medium text-slate-600">
             {pollInfo.question}
           </span>
-          {myPoll && <Button variant="secondary">View report</Button>}
+          {myPoll && (
+            <Button
+              className="text-blue-600 text-sm font-medium"
+              variant="secondary"
+              size="medium"
+            >
+              view report
+            </Button>
+          )}
         </div>
       ))}
     </Card>
