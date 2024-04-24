@@ -66,7 +66,7 @@ function PollsList({ pollsList, myPoll = false }) {
 
 function Title({ children }) {
   return (
-    <div className="mb-4 text-base	font-medium border-cyan-800 text-slate-800		">
+    <div className="mb-4 text-base font-medium border-cyan-800 text-slate-800">
       {children}
     </div>
   );

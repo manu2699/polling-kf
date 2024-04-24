@@ -31,7 +31,7 @@ export default function PollId({ params }) {
             options={pollInfo.options}
           />
         )}
-        <Button className="bg-slate-600 text-white	mx-6 mb-6">Submit</Button>
+        <Button className="bg-slate-600 text-white mx-6 mb-6">Submit</Button>
       </Card>
     </div>
   );
