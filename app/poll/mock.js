@@ -1,4 +1,4 @@
-const POLL_LIST = [
+export const POLL_LIST = [
   {
     id: "001",
     question: "what is ur fav snack ?",
