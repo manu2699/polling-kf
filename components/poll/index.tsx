@@ -98,12 +98,12 @@ function Poll({ isPollCreation, onSubmit }: any) {
             <div className="flex gap-3">
               <span>Poll type</span>{" "}
               <ActionButton
-                onPress={() => console.log("createions")}
+                onPress={() => setIsSingleSelect(!isSingleSelect)}
                 title="Single answer"
                 isCheckBox={isSingleSelect}
               />
               <ActionButton
-                onPress={() => console.log("createions")}
+                onPress={() => setIsMultiSelect(!isMultiSelect)}
                 title="Multiple answer"
                 isCheckBox={isMultiSelect}
               />
