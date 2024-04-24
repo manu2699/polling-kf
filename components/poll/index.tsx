@@ -26,26 +26,32 @@ function ActionButton({
     </div>
   );
 }
-function Poll({ isPollCreation,onSubmit }: any) {
+function Poll({ isPollCreation, onSubmit }: any) {
   const [options, setOptions] = useState([
     { id: "guru", value: "options", isSelected: false, isCheckBox: false },
     { id: "guru2", value: "options", isSelected: false, isCheckBox: false },
-
     { id: "guru3", value: "options", isSelected: false, isCheckBox: false },
-
     { id: "guru4", value: "options", isSelected: false, isCheckBox: false },
   ]);
-  const [title,setTitle]=useState("")
-  function onPollCreation(){
-    onSubmit({title,options})
+  const [title, setTitle] = useState("");
+  function onPollCreation() {
+    onSubmit({ title, options });
   }
-  function onCreateOptions(){
-    setOptions([...options, { id: Math.random().toString(), value: "options", isSelected: false, isCheckBox: true }])
+  function onCreateOptions() {
+    setOptions([
+      ...options,
+      {
+        id: Math.random().toString(),
+        value: "options",
+        isSelected: false,
+        isCheckBox: true,
+      },
+    ]);
   }
   return (
-    <div className="grid gird-cols-8">
-      <div className="grid-span-2"></div>
-      <div className="grid-span-4 bg-blue-100">
+    <div className="grid grid-cols-3">
+      <div className="grid cols-span-2"></div>
+      <div className="grid cols-span-4 bg-blue-100">
         <div className="flex flex-col p-3 rounded-md border-2 border-slate-200">
           <div className="flex gap-3">
             <span>Poll type</span>{" "}
@@ -67,7 +73,7 @@ function Poll({ isPollCreation,onSubmit }: any) {
             <input
               type="text"
               className="border-2 border-slate-200 rounded-md px-2 py-1"
-              onChange={(e)=>setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <div className="flex flex-col gap-y-3">
@@ -77,16 +83,21 @@ function Poll({ isPollCreation,onSubmit }: any) {
               </div>
             ))}
           </div>
-          <div onClick={onCreateOptions} className="cursor-pointer bg-violet-600 text-white font-medium w-fit px-5 py-2 rounded-md">
+          <div
+            onClick={onCreateOptions}
+            className="cursor-pointer bg-violet-600 text-white font-medium w-fit px-5 py-2 rounded-md"
+          >
             + add options
           </div>
-          <div onClick={onPollCreation} className="cursor-pointer bg-violet-800 text-white font-medium w-fit px-5 py-2 rounded-md">
-          Submit
+          <div
+            onClick={onPollCreation}
+            className="cursor-pointer bg-violet-800 text-white font-medium w-fit px-5 py-2 rounded-md"
+          >
+            Submit
+          </div>
         </div>
-        </div>
-      
       </div>
-      <div className="grid-span-2"></div>
+      <div className="grid cols-span-2"></div>
     </div>
   );
 }
