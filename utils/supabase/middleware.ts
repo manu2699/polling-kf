@@ -15,6 +15,7 @@ export const createClient = (request: NextRequest) => {
     {
       cookies: {
         get(name: string) {
+          // console.log("name", request.cookies.get(name)?.value)
           return request.cookies.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {

@@ -1,11 +1,7 @@
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+import styles from "./page.module.css";
+
 
 export default async function Page() {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
 
-  const { data: todos } = await supabase.from("todos").select();
-
-  return <ul>{todos?.map((todo) => <li>{todo}</li>)}</ul>;
+	return <main className={styles.main}>Poll</main>;
 }
