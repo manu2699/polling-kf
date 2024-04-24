@@ -1,7 +1,5 @@
 import styles from "./page.module.css";
 
-
-export default async function Page() {
-
-	return <main className={styles.main}>Poll</main>;
+export default function Home() {
+  return <main className={"bg-red-500"}>Poll</main>;
 }
