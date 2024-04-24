@@ -7,44 +7,53 @@ export function ActionButton({
   isPollCreation,
   title = "Options",
   onPress = () => {},
-  item={},
-  onOptionsChange
+  item = {},
+  onOptionsChange,
 }: any) {
   const [isChecked, setIsChecked] = useState(false);
   const [isEditableTitle, setEditableTitle] = useState(false);
-  const [customTitle,setCustomTitle]=useState("")
+  const [customTitle, setCustomTitle] = useState(title);
   function handleSelection() {
     setIsChecked(!isChecked);
-    console.log("calledbakkskdfsd")
+    console.log("calledbakkskdfsd");
     onPress();
   }
   function editOptions(e: any) {
-    console.log("editOptions")
+    console.log("editOptions");
     e.stopPropagation();
     setEditableTitle(true);
 
-    if (isPollCreation) {
-    
-    }
   }
-  function onInputBlur(e:any){
+  function onInputBlur(e: any) {
     setEditableTitle(false);
+    onOptionsChange(item.id, customTitle);
   }
   return (
     <div
       className="flex gap-2 px-2 py-2 bg-violet-500 rounded-md w-fit cursor-pointer min-w-48"
       onClick={() => handleSelection()}
     >
-      {!isPollCreation && isCheckBox ? (
+      {isCheckBox ? (
         <input type="checkbox" className="mr-2" checked={isChecked} />
       ) : (
         <input type="radio" className="mr-2" />
       )}
+
       <div
         className="font-sans font-md text-white font-medium"
         onClick={(e) => editOptions(e)}
       >
-        {isEditableTitle ? <input type="text" value={customTitle} className="text-black" onChange={(e)=>setCustomTitle(e.target.value)} onBlur={(e)=>onInputBlur(e)}/> : title}
+        {isEditableTitle ? (
+          <input
+            type="text"
+            value={customTitle}
+            className="text-black"
+            onChange={(e) => setCustomTitle(e.target.value)}
+            onBlur={(e) => onInputBlur(e)}
+          />
+        ) : (
+          customTitle
+        )}
       </div>
     </div>
   );
@@ -58,7 +67,8 @@ function Poll({ isPollCreation, onSubmit }: any) {
   ]);
   const [title, setTitle] = useState("");
   function onPollCreation() {
-    onSubmit({ title, options });
+    // onSubmit({ title, options });
+    console.log({ title, options })
   }
   function onCreateOptions() {
     setOptions([
@@ -70,6 +80,12 @@ function Poll({ isPollCreation, onSubmit }: any) {
         isCheckBox: true,
       },
     ]);
+  }
+
+  function onOptionsChange(id: string, title: string) {
+    setOptions(
+      options.map((item) => (item.id === id ? { ...item, value: title } : item))
+    );
   }
   return (
     <div className="grid grid-cols-3">
@@ -107,6 +123,7 @@ function Poll({ isPollCreation, onSubmit }: any) {
                     isCheckBox={item.isSelected}
                     title={item.value}
                     item={item}
+                    onOptionsChange={onOptionsChange}
                   />
                 </div>
               ))}
