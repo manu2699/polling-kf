@@ -1,6 +1,11 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
-export default function Home() {
-  return <main className={styles.main}>Poll</main>;
+export default async function Page() {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data: todos } = await supabase.from("todos").select();
+
+  return <ul>{todos?.map((todo) => <li>{todo}</li>)}</ul>;
 }
