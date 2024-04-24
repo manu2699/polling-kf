@@ -22,7 +22,6 @@ export function ActionButton({
     console.log("editOptions");
     e.stopPropagation();
     setEditableTitle(true);
-
   }
   function onInputBlur(e: any) {
     setEditableTitle(false);
@@ -66,9 +65,12 @@ function Poll({ isPollCreation, onSubmit }: any) {
     { id: "guru4", value: "options", isSelected: false, isCheckBox: false },
   ]);
   const [title, setTitle] = useState("");
+  const [isSingleSelect, setIsSingleSelect] = useState(true);
+  const [isMultiSelect, setIsMultiSelect] = useState(false);
+
   function onPollCreation() {
     // onSubmit({ title, options });
-    console.log({ title, options })
+    console.log({ title, options, isSingleSelect, isMultiSelect });
   }
   function onCreateOptions() {
     setOptions([
@@ -98,12 +100,12 @@ function Poll({ isPollCreation, onSubmit }: any) {
               <ActionButton
                 onPress={() => console.log("createions")}
                 title="Single answer"
-                isCheckBox={true}
+                isCheckBox={isSingleSelect}
               />
               <ActionButton
                 onPress={() => console.log("createions")}
                 title="Multiple answer"
-                isCheckBox={true}
+                isCheckBox={isMultiSelect}
               />
             </div>
           </div>
