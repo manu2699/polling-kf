@@ -1,73 +1,43 @@
-"use client";
+import React from "react";
+import { createClient } from "@/utils/supabase/server";
+import { VotingComponent } from "./components/index.jsx";
 
-import React, { useState } from "react";
-import { POLL_LIST } from "../mock";
-import { Card } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import Poll from "@/components/poll";
-import { Button } from "@/components/ui/button";
+async function getData({ pollId }) {
+	// const userCookie = cookies().get("userId");
 
-export default function PollId({ params }) {
-  const [selectedPollOption, setSelectedPollOption] = useState();
-  let [pollInfo] = POLL_LIST.filter((data) => data.id === params.id);
+	const supabase = createClient();
 
-  function onSingleSelectChange(data) {
-    console.log(data, "data");
-    setSelectedPollOption(data);
-  }
+	const { data, error } = await supabase
+		.from("poll")
+		.select()
+		.eq("id", pollId);
+	if (error) {
+		return { error: error.message };
+	}
 
-  return (
-    <div className="p-10">
-      <Card className="">
-        <p className="font-medium text-slate-600 m-4">{pollInfo.question}</p>
-        <div className="h-px w-full bg-slate-400	mb-6" />
-        {pollInfo.isMulti ? (
-          <MultiSelect options={pollInfo.options} />
-        ) : (
-          <SingleSelect
-            onSingleSelectChange={onSingleSelectChange}
-            options={pollInfo.options}
-          />
-        )}
-        <Button className="bg-slate-600 text-white mx-6 mb-6">Submit</Button>
-      </Card>
-    </div>
-  );
+	const { data: pollOptions, error: optionsError } = await supabase
+		.from("pollOptions")
+		.select()
+		.eq("pollId", pollId);
+
+	if (optionsError) {
+		return { error: optionsError.message };
+	}
+
+	return { data: { ...data[0], options: pollOptions } };
 }
 
-function SingleSelect({ options, onSingleSelectChange }) {
-  console.log(options, "options");
-  return (
-    <RadioGroup onValueChange={onSingleSelectChange}>
-      {options.map((option) => (
-        <div
-          key={option.id}
-          id={option.id}
-          className="font-medium text-slate-600 flex items-center space-x-2 mx-6 mb-6"
-        >
-          <RadioGroupItem value={option.value} id={option.id} />
-          <Label htmlFor={option.id}>{option.value}</Label>
-        </div>
-      ))}
-      {/* {options} */}
-    </RadioGroup>
-  );
-}
+export default async function PollId({ params }) {
+	let { data, error } = await getData({ pollId: params.id });
 
-function MultiSelect({ options }) {
-  return (
-    <div>
-      {options.map((option) => (
-        <div
-          key={option.id}
-          className="flex h-6 align-center font-medium text-slate-600 flex items-center space-x-2 mx-6 mb-6"
-        >
-          <Checkbox id="terms" />
-          <Label htmlFor={option.id}>{option.value}</Label>
-        </div>
-      ))}
-    </div>
-  );
+	async function handleSubmit(data) {
+		"use server";
+		console.log("submit data", data);
+	}
+
+	if (error) {
+		return <div>{error}</div>;
+	}
+
+	return <VotingComponent pollInfo={data} onSubmit={handleSubmit} />;
 }
