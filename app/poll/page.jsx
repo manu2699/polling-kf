@@ -1,20 +1,35 @@
+import Link from "next/link.js";
+import { cookies } from "next/headers";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { createClient } from "@/utils/supabase/server";
 
-import { POLL_LIST } from "./mock.js";
+// import { redirect } from 'next/navigation'
 
-const my_session_id = "venky001_session_id";
+async function getData() {
+  const userCookie = cookies().get("userId");
 
-export default function Home() {
-  let myPolls = [];
-  let othersPolls = [];
-  POLL_LIST.forEach((poll) => {
-    if (poll.createdBy.id === my_session_id) {
-      myPolls.push(poll);
-    } else {
-      othersPolls.push(poll);
-    }
-  });
+  const supabase = createClient();
+
+  const { data: othersPolls } = await supabase
+    .from("poll")
+    .select()
+    .neq("createdBy", userCookie?.value || "");
+
+  const { data: myPolls } = await supabase
+    .from("poll")
+    .select()
+    .eq("createdBy", userCookie?.value || "");
+
+  // console.log("polling list", {othersPolls, myPolls});
+
+  return { othersPolls, myPolls };
+}
+
+export default async function Home() {
+  let { othersPolls, myPolls } = await getData();
+  // console.log(othersPolls);
 
   return (
     <div className="flex flex-col	gap-4">
@@ -22,7 +37,11 @@ export default function Home() {
         <div className="text-base	font-semibold	text-cyan-800	">
           Polls Dashboard
         </div>
-        <Button className="bg-slate-600 text-white m-2" variant="secondary">
+        <Button
+          className="bg-slate-600 text-white m-2"
+          variant="secondary"
+          href={"/poll/create"}
+        >
           Create Poll
         </Button>
       </div>

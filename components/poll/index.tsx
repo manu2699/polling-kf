@@ -10,14 +10,13 @@ export function ActionButton({
   isPollCreation,
   title = "Options",
   onPress = () => {},
-  isEditable = true,
   item = {},
   onOptionsChange,
-  className,
+  isEditable = true,
 }: any) {
   const [isChecked, setIsChecked] = useState(false);
   const [isEditableTitle, setEditableTitle] = useState(false);
-  const [customTitle, setCustomTitle] = useState("");
+  const [customTitle, setCustomTitle] = useState(title);
   function handleSelection() {
     setIsChecked(!isChecked);
     console.log("calledbakkskdfsd");
@@ -27,21 +26,23 @@ export function ActionButton({
     console.log("editOptions");
     e.stopPropagation();
     setEditableTitle(true);
-
-    if (isPollCreation) {
-    }
   }
   function onInputBlur(e: any) {
     setEditableTitle(false);
+    onOptionsChange(item.id, customTitle);
   }
 
   return (
-    <div className="flex mx-6" onClick={() => handleSelection()}>
-      {!isPollCreation && isCheckBox ? (
+    <div
+      className="flex gap-2 px-2 py-2 rounded-md w-fit cursor-pointer min-w-48"
+      onClick={() => handleSelection()}
+    >
+      {isCheckBox ? (
         <input type="checkbox" className="mr-2" checked={isChecked} />
       ) : (
         <input type="radio" className="mr-6" />
       )}
+
       <div
         className="font-sans font-md text-slate-600 font-medium"
         onClick={(e) => editOptions(e)}
@@ -55,7 +56,7 @@ export function ActionButton({
             onBlur={(e) => onInputBlur(e)}
           />
         ) : (
-          title
+          customTitle
         )}
       </div>
     </div>
@@ -63,14 +64,22 @@ export function ActionButton({
 }
 function Poll({ isPollCreation, onSubmit, pollInfo }: any) {
   const [options, setOptions] = useState([
-    { id: "guru", value: "options", isSelected: false, isCheckBox: false },
-    { id: "guru2", value: "options", isSelected: false, isCheckBox: false },
-    { id: "guru3", value: "options", isSelected: false, isCheckBox: false },
-    { id: "guru4", value: "options", isSelected: false, isCheckBox: false },
+    { id: "guru", value: "options", isSelected: false },
+    { id: "guru2", value: "options", isSelected: false },
+    { id: "guru3", value: "options", isSelected: false },
+    { id: "guru4", value: "options", isSelected: false },
   ]);
   const [title, setTitle] = useState("");
+  const [isSingleSelect, setIsSingleSelect] = useState(true);
+  const [isMultiSelect, setIsMultiSelect] = useState(false);
+
   function onPollCreation() {
-    onSubmit({ title, options });
+    onSubmit({ title, options, isMultiple: isMultiSelect || isSingleSelect });
+    console.log({
+      title,
+      options,
+      isMultiple: isMultiSelect || isSingleSelect,
+    });
   }
   function onCreateOptions() {
     setOptions([
@@ -79,9 +88,14 @@ function Poll({ isPollCreation, onSubmit, pollInfo }: any) {
         id: Math.random().toString(),
         value: "options",
         isSelected: false,
-        isCheckBox: true,
       },
     ]);
+  }
+
+  function onOptionsChange(id: string, title: string) {
+    setOptions(
+      options.map((item) => (item.id === id ? { ...item, value: title } : item))
+    );
   }
   return (
     <Card className="m-10">
