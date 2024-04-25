@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
-import Poll from "@/components/poll";
+import Poll from "@/components/poll/index";
 
 export default function Home() {
   async function handleSubmit(data: any) {
@@ -33,7 +33,7 @@ export default function Home() {
   }
   return (
     <div>
-      <Poll isPollCreation={true} onSubmit={handleSubmit} />
+      <Poll onSubmit={handleSubmit} />
     </div>
   );
 }
