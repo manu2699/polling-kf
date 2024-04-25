@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import { PollsList, Title } from "./list.jsx";
 
@@ -47,13 +47,13 @@ export default async function Home() {
 				<div className='text-base	font-semibold	text-cyan-800	'>
 					Polls Dashboard
 				</div>
-				<Button
-					className='bg-slate-600 text-white m-2'
+				<Link
+					className='bg-slate-600 text-white m-2 px-4 py-2 rounded-md text-sm font-medium'
 					variant='secondary'
-					// href={"/poll/create"}
-					onClick={handleCreatePoll}>
+					href={"/poll/create"}
+					>
 					Create Poll
-				</Button>
+				</Link>
 			</div>
 
 			<div className='px-6'>

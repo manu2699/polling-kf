@@ -10,7 +10,7 @@ export function PollsList({ pollsList, myPoll = false, onItemClick }) {
 		<Card className='mb-4'>
 			{pollsList.map((pollInfo) => (
 				<div
-					className='p-5 flex items-center justify-between border-b-2	'
+					className='p-5 flex items-center justify-between border-b-2	hover:bg-slate-100 cursor-pointer'
 					key={pollInfo.id}
 					onClick={() => handleItemClick(pollInfo.id)}>
 					<span className='text-sm font-medium text-slate-600'>
