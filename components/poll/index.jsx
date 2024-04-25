@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "../ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Button } from "../ui/button";
 
 export default function Poll({ onSubmit }) {
   const [isMultiSelect, setIsMultiSelect] = useState(true);
@@ -69,7 +70,7 @@ function PollOption({ isMultiSelect }) {
     // const [fieldToUpdate] = pollOptions.filter((data) => data.id === id);
     console.log({ id, value }, "onOptionUpdate");
     const updatedList = pollOptions.map((data) => {
-      if (data.id === id) {
+      if (data.id === id && value) {
         data.value = value;
       }
       return data;
@@ -79,7 +80,7 @@ function PollOption({ isMultiSelect }) {
     console.log(updatedList, "updatedList");
   }
 
-  if (isMultiSelect) {
+  function EditableCheckBox() {
     return pollOptions.map((option) => (
       <div
         key={option.id}
@@ -99,7 +100,21 @@ function PollOption({ isMultiSelect }) {
 
   return (
     <div>
-      <div>Hi</div>
+      {isMultiSelect ? <EditableCheckBox /> : <div>single select </div>}
+      <Button
+        onClick={() =>
+          setPollOptions((prevState) => [
+            ...prevState,
+            {
+              id: `option_${prevState.length}`,
+              value: `Option ${prevState.length}`,
+            },
+          ])
+        }
+        className="bg-slate-600 text-white m-2"
+      >
+        + Add options
+      </Button>
     </div>
   );
 }
@@ -123,7 +138,6 @@ function EditableOption({
   return (
     <Label
       onClick={(e) => {
-        e.preventDefault();
         onChangeAsEditable(id);
       }}
       htmlFor={id}
