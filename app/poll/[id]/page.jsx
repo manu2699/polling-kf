@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import Poll from "@/components/poll";
+import Poll from "@/components/poll2";
 import { Button } from "@/components/ui/button";
 
 export default function PollId({ params }) {
