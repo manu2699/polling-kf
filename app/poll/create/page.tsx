@@ -8,6 +8,8 @@ export default function Home() {
   async function handleSubmit(data: any) {
     "use server";
 
+    console.log("dt submit", data);
+
     const userCookie = cookies().get("userId");
     console.log("cookies", userCookie);
 
@@ -27,9 +29,9 @@ export default function Home() {
       return error;
     }
 
-    console.log("pollData", pollData);
+    // console.log("pollData", pollData);
 
-    redirect("/", "replace");
+    redirect("/", "push");
   }
   return (
     <div>

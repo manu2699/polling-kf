@@ -14,8 +14,8 @@ export default function Poll({ onSubmit }) {
   const [question, setQuestion] = useState("");
 
   function onHandleSubmit(data) {
-    let pollData = { question: question, options: data };
-    console.log(pollData, "pollData");
+    let pollData = { question, options: data };
+    // console.log(pollData, "pollData");
     onSubmit(pollData);
   }
 
@@ -75,8 +75,8 @@ function PollType({ onChange, isMultiSelect }) {
 
 function PollOption({ isMultiSelect, onSubmit }) {
   const [pollOptions, setPollOptions] = useState([
-    { id: "options_1", value: "Options 1", isCorrectOption: false },
-    { id: "options_2", value: "Options 2", isCorrectOption: false },
+    { id: "options_1", value: "Options 1", isCorrect: false },
+    { id: "options_2", value: "Options 2", isCorrect: false },
   ]);
   const [isEditable, setIsEditable] = useState(false);
 
@@ -95,7 +95,7 @@ function PollOption({ isMultiSelect, onSubmit }) {
   function onCheckBoxChange(value, id) {
     const updatedList = pollOptions.map((data) => {
       if (data.id === id) {
-        data.isCorrectOption = value;
+        data.isCorrect = value;
       }
       return data;
     });
@@ -109,7 +109,7 @@ function PollOption({ isMultiSelect, onSubmit }) {
         className="flex mt-6 h-6 align-center font-medium text-slate-600 flex items-center space-x-2 mx-6 mb-6"
       >
         <Checkbox
-          checked={option.isCorrectOption}
+          checked={option.isCorrect}
           onCheckedChange={(value) => onCheckBoxChange(value, option.id)}
           id="terms"
         />
@@ -134,7 +134,7 @@ function PollOption({ isMultiSelect, onSubmit }) {
             {
               id: `option_${prevState.length}`,
               value: `Option ${prevState.length}`,
-              isCorrectOption: false,
+              isCorrect: false,
             },
           ])
         }

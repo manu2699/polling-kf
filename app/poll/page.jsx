@@ -31,8 +31,14 @@ export default async function Home() {
 
 	async function handleItemClick({ id }) {
 		"use server";
-		console.log("clicked", id);
+		// console.log("clicked", id);
 		redirect(`/poll/${id}`);
+	}
+
+	async function handleCreatePoll() {
+		"use server";
+		console.log("clicked create poll");
+		redirect("/poll/create");
 	}
 
 	return (
@@ -44,7 +50,8 @@ export default async function Home() {
 				<Button
 					className='bg-slate-600 text-white m-2'
 					variant='secondary'
-					href={"/poll/create"}>
+					// href={"/poll/create"}
+					onClick={handleCreatePoll}>
 					Create Poll
 				</Button>
 			</div>
