@@ -24,12 +24,12 @@ async function getData() {
 
   // console.log("polling list", {othersPolls, myPolls});
 
-  return { othersPolls, myPolls };
+  return { othersPolls: othersPolls || [], myPolls: myPolls || [] };
 }
 
 export default async function Home() {
 
-  let { othersPolls, myPolls } = await getData();
+  let { othersPolls = [], myPolls=[] } = await getData();
   // console.log(othersPolls);
 
   return (
