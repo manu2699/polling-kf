@@ -10,6 +10,7 @@ export function ActionButton({
   isPollCreation,
   title = "Options",
   onPress = () => {},
+  isEditable = true,
   item = {},
   onOptionsChange,
   className,
@@ -45,11 +46,11 @@ export function ActionButton({
         className="font-sans font-md text-slate-600 font-medium"
         onClick={(e) => editOptions(e)}
       >
-        {isEditableTitle ? (
+        {isEditable && isEditableTitle ? (
           <input
             type="text"
             value={customTitle}
-            className="text-black"
+            className="text-black border-2"
             onChange={(e) => setCustomTitle(e.target.value)}
             onBlur={(e) => onInputBlur(e)}
           />
@@ -91,11 +92,13 @@ function Poll({ isPollCreation, onSubmit, pollInfo }: any) {
             onPress={() => console.log("createions")}
             title="Single answer"
             isCheckBox={true}
+            isEditable={false}
           />
           <ActionButton
             onPress={() => console.log("createions")}
             title="Multiple answer"
             isCheckBox={true}
+            isEditable={false}
           />
         </div>
       </div>
