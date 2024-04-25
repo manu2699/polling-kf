@@ -35,7 +35,7 @@ export default async function Home() {
 		redirect(`/poll/${id}`);
 	}
 
-	async function handleCreatePoll() {
+	async function handleCreatePoll({}) {
 		"use server";
 		console.log("clicked create poll");
 		redirect("/poll/create");

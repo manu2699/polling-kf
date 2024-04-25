@@ -31,7 +31,7 @@ export default function Home() {
 
     // console.log("pollData", pollData);
 
-    redirect("/", "push");
+    redirect("/");
   }
   return (
     <div>
