@@ -8,8 +8,6 @@ export default function Home() {
 	async function handleSubmit(data: any) {
 		"use server";
 
-		console.log("dt submit", data);
-
 		let answersData = data.options.filter(
 			(opt: { isCorrect: boolean }) => opt.isCorrect
 		);
@@ -28,30 +26,34 @@ export default function Home() {
 			.insert({
 				title: data.question,
 				isMultiple: answersData.length > 1,
-				createdBy: userCookie?.value || ""
+				createdBy: userCookie?.value || "",
 			})
 			.select();
+
+		console.log("poll option data", pollData, pollError)
 
 		if (pollError) {
 			return { error: pollError.message };
 		}
 
 		data.options.forEach(async (option: any) => {
-      // create poll options
+			// create poll options
 			let { data: pollOption, error: pollError } = await supabase
 				.from("pollOptions")
 				.insert({ name: option.value, pollId: pollData[0].id })
 				.select();
-  
-      // create answers
+
+			console.log("poll option data", pollOption)
+
+			// create answers
 			if (pollOption?.[0] && option.isCorrect) {
-				let { data: pollAnswer, error: pollAnswerError } =
-					await supabase
-						.from("answers")
-						.insert({
-							pollId: pollData[0].id,
-							optionId: pollOption[0].id
-						}).select();
+				await supabase
+					.from("answers")
+					.insert({
+						pollId: pollData[0].id,
+						optionId: pollOption[0].id,
+					})
+					.select();
 			}
 		});
 

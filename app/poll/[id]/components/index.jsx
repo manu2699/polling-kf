@@ -26,7 +26,7 @@ export function VotingComponent({ pollInfo, onSubmit }) {
       <Card className="">
         <p className="font-medium text-slate-600 m-4">{pollInfo.title}</p>
         <div className="h-px w-full bg-slate-400	mb-6" />
-        {!pollInfo.isMulti ? (
+        {pollInfo.isMultiple ? (
           <MultiSelect
             onSelect={(state, value) => {
               if (state) {
