@@ -1,9 +1,8 @@
 import { cookies } from "next/headers";
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
 import Poll from "@/components/poll";
-
 
 export default function Home() {
   async function handleSubmit(data: any) {
@@ -19,21 +18,21 @@ export default function Home() {
       .insert({
         title: data.title,
         isMultiple: data.isMultiple,
-        createdBy: userCookie?.value || ""
+        createdBy: userCookie?.value || "",
       })
       .select();
 
-    if(error){
+    if (error) {
       // throw new Error(error.message)
       return error;
     }
-    
+
     console.log("pollData", pollData);
-    
-    redirect("/", "replace")
+
+    redirect("/", "replace");
   }
   return (
-    <div className="bg-slate-100">
+    <div>
       <Poll isPollCreation={true} onSubmit={handleSubmit} />
     </div>
   );
