@@ -11,6 +11,13 @@ import { Button } from "../ui/button";
 
 export default function Poll({ onSubmit }) {
   const [isMultiSelect, setIsMultiSelect] = useState(true);
+  const [question, setQuestion] = useState("");
+
+  function onHandleSubmit(data) {
+    let pollData = { question: question, options: data };
+    console.log(pollData, "pollData");
+    onSubmit(pollData);
+  }
 
   return (
     <Card className="m-6">
@@ -19,15 +26,22 @@ export default function Poll({ onSubmit }) {
         <PollType
           isMultiSelect={isMultiSelect}
           onChange={(value) => {
-            console.log(value, "poll type");
             setIsMultiSelect(value);
           }}
         />
       </div>
       <div className="p-6">
-        <Input type="text" placeholder="Enter your question here.." />
+        <Input
+          type="text"
+          onChange={(event) => setQuestion(event.target.value)}
+          placeholder="Enter your question here.."
+        />
 
-        <PollOption isMultiSelect={isMultiSelect} />
+        <PollOption
+          isMultiSelect={isMultiSelect}
+          // onSubmit={(data) => ({ question: question, options: data })}
+          onSubmit={onHandleSubmit}
+        />
       </div>
     </Card>
   );
@@ -59,16 +73,15 @@ function PollType({ onChange, isMultiSelect }) {
   );
 }
 
-function PollOption({ isMultiSelect }) {
+function PollOption({ isMultiSelect, onSubmit }) {
   const [pollOptions, setPollOptions] = useState([
-    { id: "options_1", value: "Options 1" },
-    { id: "options_2", value: "Options 2" },
+    { id: "options_1", value: "Options 1", isCorrectOption: false },
+    { id: "options_2", value: "Options 2", isCorrectOption: false },
   ]);
   const [isEditable, setIsEditable] = useState(false);
 
   function onOptionUpdate(id, value) {
     // const [fieldToUpdate] = pollOptions.filter((data) => data.id === id);
-    console.log({ id, value }, "onOptionUpdate");
     const updatedList = pollOptions.map((data) => {
       if (data.id === id && value) {
         data.value = value;
@@ -77,7 +90,16 @@ function PollOption({ isMultiSelect }) {
     });
     setPollOptions(updatedList);
     setIsEditable("");
-    console.log(updatedList, "updatedList");
+  }
+
+  function onCheckBoxChange(value, id) {
+    const updatedList = pollOptions.map((data) => {
+      if (data.id === id) {
+        data.isCorrectOption = value;
+      }
+      return data;
+    });
+    setPollOptions(updatedList);
   }
 
   function EditableCheckBox() {
@@ -86,7 +108,11 @@ function PollOption({ isMultiSelect }) {
         key={option.id}
         className="flex mt-6 h-6 align-center font-medium text-slate-600 flex items-center space-x-2 mx-6 mb-6"
       >
-        <Checkbox id="terms" />
+        <Checkbox
+          checked={option.isCorrectOption}
+          onCheckedChange={(value) => onCheckBoxChange(value, option.id)}
+          id="terms"
+        />
         <EditableOption
           onValueChange={onOptionUpdate}
           id={option.id}
@@ -108,12 +134,19 @@ function PollOption({ isMultiSelect }) {
             {
               id: `option_${prevState.length}`,
               value: `Option ${prevState.length}`,
+              isCorrectOption: false,
             },
           ])
         }
         className="bg-slate-600 text-white m-2"
       >
         + Add options
+      </Button>
+      <Button
+        className="bg-slate-600 text-white m-2"
+        onClick={() => onSubmit(pollOptions)}
+      >
+        Submit
       </Button>
     </div>
   );
