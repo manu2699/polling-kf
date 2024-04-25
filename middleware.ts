@@ -6,16 +6,21 @@ import { createClient } from "./utils/supabase/server";
 export async function middleware(request: NextRequest) {
 	if (!request.cookies.has("userId")) {
 		const supabase = createClient();
-		let { data } = await supabase
+		let { data, error } = await supabase
 			.from("sessions")
 			.insert([{ name: "test" }])
 			.select();
+
+		if(error) {
+			console.log("Error :: ", error);
+			return NextResponse.next();
+		}
 
 		// // const { data } = await supabase.from("usersessions").select();
 		console.log("User session data :: ", data);
 
 		const response = NextResponse.next();
-		response.cookies.set("userId", data[0].id);
+		response.cookies.set("userId", data?.[0].id || "errror_id");
 
 		return response;
 	} else {
