@@ -1,11 +1,9 @@
-// import Link from "next/link.js";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { createClient } from "@/utils/supabase/server";
-
-// import { redirect } from 'next/navigation'
+import { PollsList, Title } from "./list.jsx";
 
 async function getData() {
 	const userCookie = cookies().get("userId");
@@ -28,8 +26,14 @@ async function getData() {
 }
 
 export default async function Home() {
-	let { othersPolls = [], myPolls = [] } = await getData();
+	const { othersPolls = [], myPolls = [] } = await getData();
 	// console.log(othersPolls);
+
+	async function handleItemClick({ id }) {
+		"use server";
+		console.log("clicked", id);
+		redirect(`/poll/${id}`);
+	}
 
 	return (
 		<div className='flex flex-col	gap-4'>
@@ -47,43 +51,18 @@ export default async function Home() {
 
 			<div className='px-6'>
 				<Title>My polls list</Title>
-				<PollsList myPoll={true} pollsList={myPolls} />
+				<PollsList
+					// myPoll={true}
+					pollsList={myPolls}
+					onItemClick={handleItemClick}
+				/>
 
 				<Title>Others polls list</Title>
-				<PollsList pollsList={othersPolls} />
+				<PollsList
+					pollsList={othersPolls}
+					onItemClick={handleItemClick}
+				/>
 			</div>
-		</div>
-	);
-}
-
-function PollsList({ pollsList, myPoll = false }) {
-	return (
-		<Card className='mb-4'>
-			{pollsList.map((pollInfo) => (
-				<div
-					className='p-5 flex items-center justify-between border-b-2	'
-					key={pollInfo.id}>
-					<span className='text-sm font-medium text-slate-600'>
-						{pollInfo.question}
-					</span>
-					{myPoll && (
-						<Button
-							className='text-blue-600 text-sm font-medium'
-							variant='secondary'
-							size='medium'>
-							view report
-						</Button>
-					)}
-				</div>
-			))}
-		</Card>
-	);
-}
-
-function Title({ children }) {
-	return (
-		<div className='mb-4 text-base font-medium border-cyan-800 text-slate-800'>
-			{children}
 		</div>
 	);
 }
