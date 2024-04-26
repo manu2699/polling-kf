@@ -34,17 +34,20 @@ export default function Home() {
 		console.log("poll option data", pollData, pollError)
 
 		if (pollError) {
+			console.error("error while poll ::", pollError);
 			return { error: pollError.message };
 		}
 
 		data.options.forEach(async (option: any) => {
 			// create poll options
-			let { data: pollOption, error: pollError } = await supabase
+			let { data: pollOption, error: optionError } = await supabase
 				.from("pollOptions")
 				.insert({ name: option.value, pollId: pollData[0].id })
 				.select();
 
-			console.log("poll option data", pollOption)
+			if (optionError) {
+				console.error("poll option error :: ", optionError)
+			}
 
 			// create answers
 			if (pollOption?.[0] && option.isCorrect) {
@@ -60,7 +63,7 @@ export default function Home() {
 
 		// console.log("pollData", pollData);
 
-		redirect("/");
+		redirect("/poll");
 	}
 	return (
 		<div>
