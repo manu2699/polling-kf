@@ -13,6 +13,7 @@ export default function Home() {
 		);
 
 		if (answersData.length === 0) {
+			console.log("error while submitting :: one required")
 			return { error: "Please select atleast one correct answer" };
 		}
 

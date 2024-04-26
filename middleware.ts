@@ -24,7 +24,7 @@ export async function middleware(request: NextRequest) {
 
 		return response;
 	} else {
-		console.log("userId", request.cookies.get("userId"));
+		// console.log("userId", request.cookies.get("userId"));
 	}
 	return NextResponse.next();
 }

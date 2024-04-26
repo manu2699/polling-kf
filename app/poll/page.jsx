@@ -35,14 +35,14 @@ export default async function Home() {
 		redirect(`/poll/${id}`);
 	}
 
-	async function handleCreatePoll({}) {
+	async function handleCreatePoll({ }) {
 		"use server";
 		console.log("clicked create poll");
 		redirect("/poll/create");
 	}
 
 	return (
-		<div className='flex flex-col	gap-4'>
+		<div className='flex flex-col gap-4'>
 			<div className='px-6 flex gap-4 items-center justify-between w-full border-b-2'>
 				<div className='text-base	font-semibold	text-cyan-800	'>
 					Polls Dashboard
@@ -51,7 +51,7 @@ export default async function Home() {
 					className='bg-slate-600 text-white m-2 px-4 py-2 rounded-md text-sm font-medium'
 					variant='secondary'
 					href={"/poll/create"}
-					>
+				>
 					Create Poll
 				</Link>
 			</div>
